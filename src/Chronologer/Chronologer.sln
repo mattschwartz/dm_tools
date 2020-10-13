@@ -1,0 +1,29 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chronologer", "Chronologer\Chronologer.csproj", "{46D29467-735E-43D2-929D-44CCCD3792BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chronologer-Lib", "..\Chronologer-Lib\Chronologer-Lib.csproj", "{F1EDB74F-6B58-471A-B28C-6F928144A56C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cli", "..\cli\cli.csproj", "{97D8E34A-258B-459E-B298-FFCF35888A2F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{46D29467-735E-43D2-929D-44CCCD3792BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46D29467-735E-43D2-929D-44CCCD3792BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46D29467-735E-43D2-929D-44CCCD3792BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46D29467-735E-43D2-929D-44CCCD3792BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1EDB74F-6B58-471A-B28C-6F928144A56C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1EDB74F-6B58-471A-B28C-6F928144A56C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1EDB74F-6B58-471A-B28C-6F928144A56C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1EDB74F-6B58-471A-B28C-6F928144A56C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97D8E34A-258B-459E-B298-FFCF35888A2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97D8E34A-258B-459E-B298-FFCF35888A2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97D8E34A-258B-459E-B298-FFCF35888A2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97D8E34A-258B-459E-B298-FFCF35888A2F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
