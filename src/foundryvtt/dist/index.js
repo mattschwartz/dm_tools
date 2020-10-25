@@ -31,6 +31,25 @@ var createDirIfNotExists = function (path) {
     if (!fs.existsSync(path)) {
         fs.mkdirSync(path, { recursive: true });
     }
+    return path;
+};
+var transformJs = function (backupDirPath, srcPath, fileNameAndExt) {
+    console.log('Reading file:', srcPath);
+    var content = fs.readFileSync(srcPath, { encoding: 'utf-8' });
+    var lines = content.split('\n');
+    var items = [];
+    lines.filter(function (t) { return t; }).forEach(function (line) {
+        items.push(JSON.parse(line));
+    });
+    var dstDir = createDirIfNotExists(path.join(backupDirPath, 'transforms'));
+    var dst = path.join(dstDir, fileNameAndExt + '.json');
+    console.log('Writing transform file:' + dst);
+    var transformJsContent = JSON.stringify(items, null, 2);
+    fs.writeFile(dst, transformJsContent, function (err) {
+        if (err) {
+            console.error('Write Error: ' + err);
+        }
+    });
 };
 var backupBubblesNightmareWorld = function () {
     var worldRootDirPath = '/Users/mattschwartz/FoundryVTT/Data/worlds/bubbles-nightmare';
@@ -41,8 +60,8 @@ var backupBubblesNightmareWorld = function () {
     files.forEach(function (file) {
         var src = path.join(srcWorldDataDirPath, file);
         var dst = path.join(backupDirPath, file);
-        // console.log('Copying ' + src + ' to ' + dst);
         fs.copyFile(src, dst, function (err) { return err && console.error('Failed to copy ' + src + ' to ' + dst + ': ' + err); });
+        transformJs(backupDirPath, src, file);
     });
 };
 // main
@@ -51,17 +70,6 @@ var backupBubblesNightmareWorld = function () {
     backupBubblesNightmareWorld();
     console.log('Done');
     console.log('Committing changes.');
-    child_process_1.exec('pwd', function (error, stdout, stderr) {
-        if (error) {
-            console.error('Failed:' + error);
-        }
-        else if (stderr) {
-            console.error('stderr: ' + stderr);
-        }
-        else {
-            console.log('stdout:' + stdout);
-        }
-    });
     var commitMessage = 'Backup ' + moment_1.default.utc().format('yyyy/MM/DD HH:mm:ss z');
     child_process_1.exec("/Users/mattschwartz/GitHub/dm_tools/src/foundryvtt/commit.sh '" + commitMessage + "'", function (err) { return err && console.error('Failed to exec: ' + err); });
 })();

@@ -6,10 +6,35 @@ import moment from 'moment';
 
 const backupDir = '/Users/mattschwartz/GitHub/foundry-bak';
 
-const createDirIfNotExists = (path: string) => {
+const createDirIfNotExists = (path: string): string => {
     if (!fs.existsSync(path)) {
         fs.mkdirSync(path, { recursive: true });
     }
+    return path;
+}
+
+const transformJs = (backupDirPath: string, srcPath: string, fileNameAndExt: string) => {
+    console.log('Reading file:', srcPath);
+
+    const content: string = fs.readFileSync(srcPath, { encoding: 'utf-8' });
+    const lines: string[] = content.split('\n');
+
+    const items: {}[] = [];
+    lines.filter(t => t).forEach(line => {
+        items.push(JSON.parse(line));
+    });
+
+    const dstDir = createDirIfNotExists(path.join(backupDirPath, 'transforms'));
+    const dst = path.join(dstDir, fileNameAndExt + '.json');
+
+    console.log('Writing transform file:' + dst);
+
+    const transformJsContent = JSON.stringify(items, null, 2);
+    fs.writeFile(dst, transformJsContent, (err) => {
+        if (err) {
+            console.error('Write Error: ' + err);
+        }
+    });
 }
 
 const backupBubblesNightmareWorld = () => {
@@ -26,8 +51,9 @@ const backupBubblesNightmareWorld = () => {
         const src = path.join(srcWorldDataDirPath, file);
         const dst = path.join(backupDirPath, file);
 
-        // console.log('Copying ' + src + ' to ' + dst);
         fs.copyFile(src, dst, (err) => err && console.error('Failed to copy ' + src + ' to ' + dst + ': ' + err));
+
+        transformJs(backupDirPath, src, file);
     });
 }
 
