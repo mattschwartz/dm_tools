@@ -1,7 +1,10 @@
+import { exec } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
+import moment from 'moment';
 
-const backupDir = '../../foundry-bak';
+
+const backupDir = '/Users/mattschwartz/GitHub/foundry-bak';
 
 const createDirIfNotExists = (path: string) => {
     if (!fs.existsSync(path)) {
@@ -10,17 +13,17 @@ const createDirIfNotExists = (path: string) => {
 }
 
 const backupBubblesNightmareWorld = () => {
-    const worldLocation = '/Users/mattschwartz/FoundryVTT/Data/worlds/bubbles-nightmare';
+    const worldRootDirPath = '/Users/mattschwartz/FoundryVTT/Data/worlds/bubbles-nightmare';
 
     const backupDirPath: string = backupDir + '/Data/worlds/bubbles-nightmare/data';
     createDirIfNotExists(backupDirPath);
 
-    const srcWorldDataDir = worldLocation + '/data';
+    const srcWorldDataDirPath = worldRootDirPath + '/data';
 
-    const files: string[] = fs.readdirSync(srcWorldDataDir);
+    const files: string[] = fs.readdirSync(srcWorldDataDirPath);
 
     files.forEach((file) => {
-        const src = path.join(srcWorldDataDir, file);
+        const src = path.join(srcWorldDataDirPath, file);
         const dst = path.join(backupDirPath, file);
 
         // console.log('Copying ' + src + ' to ' + dst);
@@ -34,4 +37,21 @@ const backupBubblesNightmareWorld = () => {
     console.log('Persisting Ms Bubbles Nightmare');
     backupBubblesNightmareWorld();
     console.log('Done');
+
+    console.log('Committing changes.')
+
+    exec('pwd', (error, stdout, stderr) => {
+        if (error) {
+            console.error('Failed:' + error);
+        } else if (stderr) {
+            console.error('stderr: ' + stderr);
+        } else {
+            console.log('stdout:' + stdout);
+        }
+    });
+
+
+
+    const commitMessage = 'Backup ' + moment.utc().format('yyyy/MM/DD HH:mm:ss z');
+    exec(`/Users/mattschwartz/GitHub/dm_tools/src/foundryvtt/commit.sh '${commitMessage}'`, (err) => err && console.error('Failed to exec: ' + err));
 })();

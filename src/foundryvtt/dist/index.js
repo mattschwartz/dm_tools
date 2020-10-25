@@ -18,23 +18,28 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+var child_process_1 = require("child_process");
 var fs = __importStar(require("fs"));
 var path = __importStar(require("path"));
-var backupDir = '../../foundry-bak';
+var moment_1 = __importDefault(require("moment"));
+var backupDir = '/Users/mattschwartz/GitHub/foundry-bak';
 var createDirIfNotExists = function (path) {
     if (!fs.existsSync(path)) {
         fs.mkdirSync(path, { recursive: true });
     }
 };
 var backupBubblesNightmareWorld = function () {
-    var worldLocation = '/Users/mattschwartz/FoundryVTT/Data/worlds/bubbles-nightmare';
+    var worldRootDirPath = '/Users/mattschwartz/FoundryVTT/Data/worlds/bubbles-nightmare';
     var backupDirPath = backupDir + '/Data/worlds/bubbles-nightmare/data';
     createDirIfNotExists(backupDirPath);
-    var srcWorldDataDir = worldLocation + '/data';
-    var files = fs.readdirSync(srcWorldDataDir);
+    var srcWorldDataDirPath = worldRootDirPath + '/data';
+    var files = fs.readdirSync(srcWorldDataDirPath);
     files.forEach(function (file) {
-        var src = path.join(srcWorldDataDir, file);
+        var src = path.join(srcWorldDataDirPath, file);
         var dst = path.join(backupDirPath, file);
         // console.log('Copying ' + src + ' to ' + dst);
         fs.copyFile(src, dst, function (err) { return err && console.error('Failed to copy ' + src + ' to ' + dst + ': ' + err); });
@@ -45,4 +50,18 @@ var backupBubblesNightmareWorld = function () {
     console.log('Persisting Ms Bubbles Nightmare');
     backupBubblesNightmareWorld();
     console.log('Done');
+    console.log('Committing changes.');
+    child_process_1.exec('pwd', function (error, stdout, stderr) {
+        if (error) {
+            console.error('Failed:' + error);
+        }
+        else if (stderr) {
+            console.error('stderr: ' + stderr);
+        }
+        else {
+            console.log('stdout:' + stdout);
+        }
+    });
+    var commitMessage = 'Backup ' + moment_1.default.utc().format('yyyy/MM/DD HH:mm:ss z');
+    child_process_1.exec("/Users/mattschwartz/GitHub/dm_tools/src/foundryvtt/commit.sh '" + commitMessage + "'", function (err) { return err && console.error('Failed to exec: ' + err); });
 })();

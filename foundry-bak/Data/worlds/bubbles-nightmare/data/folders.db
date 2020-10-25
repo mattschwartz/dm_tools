@@ -1,5 +1,0 @@
-{"_id":"0fX8lZ3WkP1aUqFN","name":"Phandalin","type":"Scene","sort":null,"flags":{},"parent":null,"sorting":"a","color":"#32716a"}
-{"name":"Players","type":"Actor","sort":null,"flags":{},"parent":null,"sorting":"a","color":"","_id":"4J7a2XU3F5f3eoXF"}
-{"name":"Curse of Strahd","type":"Scene","sort":null,"flags":{},"parent":null,"sorting":"a","color":"#68517b","_id":"AValHHhtjEVwYklk"}
-{"name":"Encounters","type":"Scene","sort":null,"flags":{},"parent":"0fX8lZ3WkP1aUqFN","sorting":"a","color":"","_id":"EK1umFrpzDVjcJfM"}
-{"name":"Monsters","type":"Actor","sort":null,"flags":{},"parent":null,"sorting":"a","color":"","_id":"TlV5k0gmpH5lSM9Y"}
