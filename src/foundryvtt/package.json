@@ -1,0 +1,20 @@
+{
+  "name": "foundryvtt",
+  "version": "1.0.0",
+  "description": "NodeJs tools for Foundry",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "tsc && node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tslint": "^6.1.3",
+    "typescript": "^4.0.3"
+  },
+  "dependencies": {
+    "@types/node": "^14.14.2",
+    "fs": "0.0.1-security"
+  }
+}
