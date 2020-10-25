@@ -39,19 +39,6 @@ const backupBubblesNightmareWorld = () => {
     console.log('Done');
 
     console.log('Committing changes.')
-
-    exec('pwd', (error, stdout, stderr) => {
-        if (error) {
-            console.error('Failed:' + error);
-        } else if (stderr) {
-            console.error('stderr: ' + stderr);
-        } else {
-            console.log('stdout:' + stdout);
-        }
-    });
-
-
-
     const commitMessage = 'Backup ' + moment.utc().format('yyyy/MM/DD HH:mm:ss z');
     exec(`/Users/mattschwartz/GitHub/dm_tools/src/foundryvtt/commit.sh '${commitMessage}'`, (err) => err && console.error('Failed to exec: ' + err));
 })();
