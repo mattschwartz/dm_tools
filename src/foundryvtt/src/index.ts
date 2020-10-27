@@ -2,7 +2,7 @@ import { exec } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import moment from 'moment';
-
+import { Stopwatch } from 'ts-stopwatch';
 
 const backupDir = '/Users/mattschwartz/GitHub/foundry-bak';
 
@@ -64,7 +64,18 @@ const backupBubblesNightmareWorld = () => {
     backupBubblesNightmareWorld();
     console.log('Done');
 
-    console.log('Committing changes.')
+    console.log('Committing changes...')
     const commitMessage = 'Backup ' + moment.utc().format('yyyy/MM/DD HH:mm:ss z');
-    exec(`/Users/mattschwartz/GitHub/dm_tools/src/foundryvtt/commit.sh '${commitMessage}'`, (err) => err && console.error('Failed to exec: ' + err));
+    exec(`/Users/mattschwartz/GitHub/dm_tools/src/foundryvtt/commit.sh '${commitMessage}'`, (err, stdout, stderr) => {
+        if (err) {
+            console.error('err:', err);
+            return;
+        }
+        if (stderr) {
+            console.error('stderr:', stderr);
+            return;
+        }
+
+        stdout && console.info('stdout:', stdout);
+    });
 })();

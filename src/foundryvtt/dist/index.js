@@ -69,7 +69,17 @@ var backupBubblesNightmareWorld = function () {
     console.log('Persisting Ms Bubbles Nightmare');
     backupBubblesNightmareWorld();
     console.log('Done');
-    console.log('Committing changes.');
+    console.log('Committing changes...');
     var commitMessage = 'Backup ' + moment_1.default.utc().format('yyyy/MM/DD HH:mm:ss z');
-    child_process_1.exec("/Users/mattschwartz/GitHub/dm_tools/src/foundryvtt/commit.sh '" + commitMessage + "'", function (err) { return err && console.error('Failed to exec: ' + err); });
+    child_process_1.exec("/Users/mattschwartz/GitHub/dm_tools/src/foundryvtt/commit.sh '" + commitMessage + "'", function (err, stdout, stderr) {
+        if (err) {
+            console.error('err:', err);
+            return;
+        }
+        if (stderr) {
+            console.error('Commit terminated with error:', stderr);
+            return;
+        }
+        stdout && console.info('stdout:', stdout);
+    });
 })();
